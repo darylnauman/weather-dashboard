@@ -5,6 +5,8 @@ var searchBtn = $('#search-button');
 
 var currentCity;
 
+// var currentCityTempEl = $('#currentCityTemp');
+
 // use Open Weather 'One Call API' to get weather based on city coordinates
 function getWeather(data) {
 
@@ -17,8 +19,24 @@ function getWeather(data) {
             console.log(data);
 
             // current weather
-             var currentCityTemp = data.current.temp; // current temperature
+            // console.log(`In getWeather - city: ${currentCity}`);
+
+            // document.getElementById('currentCity').innerHTML = currentCity;
+
+            var currentConditionsEl = $('#currentConditions');
+            var cityNameEl = $('<h2>');
+            cityNameEl.textContent = currentCity;
+            console.log(cityNameEl);
+            currentConditionsEl.append(cityNameEl);
+
+            // var cityNameEl = document.createElement('h2');
+            // cityNameEl.textContent = currentCity;
+            // console.log(`cityNameEl: ${cityNameEl}`);
+            // currentConditionsEl.appendChild(cityNameEl);
+            
+            var currentCityTemp = data.current.temp; // current temperature
              console.log(`Temp: ${currentCityTemp}`);
+            //  currentCityTempEl.textContent = currentCityTemp;
             
             var currentCityWind = data.current.wind_speed; // current wind speed
             console.log(`Wind: ${currentCityWind}`);
@@ -75,7 +93,7 @@ function handleCityFormSubmit (event) {
     event.preventDefault();
 
     currentCity = cityInputEl.val().trim();
-    console.log(currentCity);
+    console.log(`In handleCityFormSubmit - city: ${currentCity}`);
 
     getCoordinates();
 }

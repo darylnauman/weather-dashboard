@@ -13,35 +13,42 @@
   <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
-<body>
+<body class="container">
 
-  <nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand">Weather Dashboard</a>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" id="city-input">
-        <button class="btn btn-outline-success" type="submit" id="search-button">Enter City</button>
-      </form>
-    </div>
-  </nav>
+  <div class="row text-center bg-primary text-white">
+    <h1>Weather Dashboard</h1>
+  </div>
 
-  
-  <main class="container">
-    <div class="row">
-      <div class="col-12 col-md-2 border border-primary">
-        <h3>Past Searches</h3>
-        <ul>
-          <li>This is a test</li>
-          <li>This is another test</li>
-        </ul>
-
+  <div class="row">
+      
+      <div class="column col-3">
+        <form>
+          <label class="">Search for a City:</label>
+          <input class="form-control me-2" type="search" placeholder="Search" id="city-input">
+          <button class="btn btn-outline-success" type="submit" id="search-button">Enter City</button>
+        </form>
+        
+        <ol id="past-searches"></ol>
       </div>
 
-      <div class="col-12 col-md-10 border border-primary">
-        <h3>Current City</h3>
+      <div class="column col-9 text-light bg-dark">
+        <div class="row" id="currentConditions">
+          <!-- <h2 id="currentCity"></h2> -->
+
+          
+          <!-- <p>Temp: <span id="currentCityTemp"></span>°C</p>
+          <p>Wind: <span></span> KPH</p>
+          <p>Humidity: <span></span>%</p>
+          <p>UV Index: <span></span></p> -->
+        </div>
+
+        <div class="row">
+          <h3>5-Day Forecast:</h3>
+        </div>
+
       </div>
-    </div>
-  </main>
+  </div>
+
 </body>
 
 
