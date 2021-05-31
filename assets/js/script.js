@@ -31,32 +31,49 @@ function getWeather () {
         console.log(`in final then of first fetch, lon: ${data.lon}`);
         console.log(`in final then of first fetch, lat: ${data.lat}`);
 
-        var requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.lat}&lon=${data.lon}&exclude=minutely,hourly,daily,alerts&units=metric&appid=${APIkey}`
+        var requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.lat}&lon=${data.lon}&exclude=minutely,hourly,alerts&units=metric&appid=${APIkey}`
         fetch(requestUrl)
             .then(function(response) {
                 return response.json();
             })
             .then(function(data) {
                 console.log("in second fetch");
-                console.log(data);              
+                console.log(data);
+
+                // current temperature
+                 var currentCityTemp = data.current.temp;
+                 console.log(`Temp: ${currentCityTemp}`);
+
+                // current wind speed
+                var currentCityWind = data.current.wind_speed;
+                console.log(`Wind: ${currentCityWind}`);
+
+                // current humidity
+                var currentCityHumidity = data.current.humidity;
+                console.log(`Humidity: ${currentCityHumidity}`);
+
+                // current UV index
+                var currentCityUV = data.current.uvi;
+                console.log(`UV: ${currentCityUV}`);
+    
+                // current weather icon
+                var currentCityWeatherIcon = data.current.weather[0].icon;
+                console.log(`Icon: ${currentCityWeatherIcon}`);
             })
     })
 }
 
-    // storedCities = JSON.parse(localStorage.getItem("cities"));
-    // var lon = storedCities[storedCities.length].lon;
+// handle city name to search for weather data submission
+function handleCityFormSubmit (event) {
+    event.preventDefault();
 
-    // console.log(`last line of getCoordinates, updated storedCities - ${storedCities}`);
-    // console.log(`last line of getCoordinates, updated lon - ${lon}`);
+    currentCity = cityInputEl.val().trim();
+    console.log(currentCity);
 
-    // var currentLat = storedCities[(storedCities.length -1)].lat;
-    // var currentLon = storedCities[(storedCities.length -1)].lon;
+    getWeather();
+}
 
-    // console.log(`In getWeather - lat: ${currentLat}`);
-    // console.log(`In getWeather - lon: ${currentLon}`);
-
-    
-    // 
+searchBtn.on("click", handleCityFormSubmit);
 
 //     fetch(requestUrl)
 //       .then(function (response) {
@@ -81,6 +98,9 @@ function getWeather () {
 //         var currentCityHumidity = data.main.humidity;
 //         console.log(`Humidity: ${currentCityHumidity}`);
 
+//         //   var currentCityUV = ;
+//         //   console.log(`UV: ${currentCityUV}`);
+
 //         // city coordinates for UV
 //         currentCityLon = data.coord.lon;
 //         console.log(`Lon: ${currentCityLon}`);
@@ -88,26 +108,16 @@ function getWeather () {
 //         currentCityLat = data.coord.lat;
 //         console.log(`Lat: ${currentCityLat}`);
 
-//         //   var currentCityUV = ;
-//         //   console.log(`UV: ${currentCityUV}`);
+
         
 //       });
 
 //       console.log(`outside of fetch - Lon: ${currentCityLon}`);
 //     //   requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${currentCityLat}}&lon=${currentCityLon}&appid=${APIkey}`;
 
+// storedCities = JSON.parse(localStorage.getItem("cities"));
+    // var lon = storedCities[storedCities.length].lon;
 
-// handle city name to search for weather data submission
-function handleCityFormSubmit (event) {
-    event.preventDefault();
-
-    currentCity = cityInputEl.val().trim();
-    console.log(currentCity);
-
-    getWeather();
-}
-
-searchBtn.on("click", handleCityFormSubmit);
-
-// Current Weather
-// api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
+    // console.log(`last line of getCoordinates, updated storedCities - ${storedCities}`);
+    // console.log(`last line of getCoordinates, updated lon - ${lon}`);
+    // 
