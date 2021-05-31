@@ -5,8 +5,8 @@ var searchBtn = $('#search-button');
 
 var currentCity;
 
-function getCoordinates () {
-    var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${currentCity}&units=metric&appid=${APIkey}`;
+function getWeather () {
+    var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${currentCity}&appid=${APIkey}`;
     var storedCities = JSON.parse(localStorage.getItem("cities")) || [];
 
     fetch(requestUrl)
@@ -19,19 +19,44 @@ function getCoordinates () {
         var cityInfo = {
             city: currentCity,
             lon: data.coord.lon,
-            lat: data.coord.lon
+            lat: data.coord.lat
         }
 
         storedCities.push(cityInfo);
         localStorage.setItem("cities", JSON.stringify(storedCities));
+        return cityInfo;
       })
-    return;
+      .then(function(data) {
+        console.log(`in final then of first fetch, city: ${data.city}`);
+        console.log(`in final then of first fetch, lon: ${data.lon}`);
+        console.log(`in final then of first fetch, lat: ${data.lat}`);
+
+        var requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.lat}&lon=${data.lon}&exclude=minutely,hourly,daily,alerts&units=metric&appid=${APIkey}`
+        fetch(requestUrl)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                console.log("in second fetch");
+                console.log(data);              
+            })
+    })
 }
 
-// function getWeather () {
-//     var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${currentCity}&units=metric&appid=${APIkey}`;    
+    // storedCities = JSON.parse(localStorage.getItem("cities"));
+    // var lon = storedCities[storedCities.length].lon;
 
-        // https://api.openweathermap.org/data/2.5/onecall?lat=${currentCityLat}}&lon=${currentCityLon}&appid=${APIkey}  
+    // console.log(`last line of getCoordinates, updated storedCities - ${storedCities}`);
+    // console.log(`last line of getCoordinates, updated lon - ${lon}`);
+
+    // var currentLat = storedCities[(storedCities.length -1)].lat;
+    // var currentLon = storedCities[(storedCities.length -1)].lon;
+
+    // console.log(`In getWeather - lat: ${currentLat}`);
+    // console.log(`In getWeather - lon: ${currentLon}`);
+
+    
+    // 
 
 //     fetch(requestUrl)
 //       .then(function (response) {
@@ -70,7 +95,7 @@ function getCoordinates () {
 
 //       console.log(`outside of fetch - Lon: ${currentCityLon}`);
 //     //   requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${currentCityLat}}&lon=${currentCityLon}&appid=${APIkey}`;
-// }
+
 
 // handle city name to search for weather data submission
 function handleCityFormSubmit (event) {
@@ -79,12 +104,10 @@ function handleCityFormSubmit (event) {
     currentCity = cityInputEl.val().trim();
     console.log(currentCity);
 
-    getCoordinates();
-    // getWeather();
+    getWeather();
 }
 
 searchBtn.on("click", handleCityFormSubmit);
 
 // Current Weather
 // api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
-// https://openweathermap.org/api
