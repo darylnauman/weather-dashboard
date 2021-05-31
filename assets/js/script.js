@@ -121,3 +121,6 @@ searchBtn.on("click", handleCityFormSubmit);
     // console.log(`last line of getCoordinates, updated storedCities - ${storedCities}`);
     // console.log(`last line of getCoordinates, updated lon - ${lon}`);
     // 
+
+    // https://openweathermap.org/api/one-call-api
+    // https://openweathermap.org/weather-conditions
