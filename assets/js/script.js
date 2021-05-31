@@ -16,25 +16,30 @@ function getWeather(data) {
         .then(function(data) {
             console.log(data);
 
-            // current temperature
-             var currentCityTemp = data.current.temp;
+            // current weather
+             var currentCityTemp = data.current.temp; // current temperature
              console.log(`Temp: ${currentCityTemp}`);
-
-            // current wind speed
-            var currentCityWind = data.current.wind_speed;
+            
+            var currentCityWind = data.current.wind_speed; // current wind speed
             console.log(`Wind: ${currentCityWind}`);
 
-            // current humidity
-            var currentCityHumidity = data.current.humidity;
+            var currentCityHumidity = data.current.humidity; // current humidity
             console.log(`Humidity: ${currentCityHumidity}`);
 
-            // current UV index
-            var currentCityUV = data.current.uvi;
+            var currentCityUV = data.current.uvi; // current UV index
             console.log(`UV: ${currentCityUV}`);
 
-            // current weather icon
-            var currentCityWeatherIcon = data.current.weather[0].icon;
+            var currentCityWeatherIcon = data.current.weather[0].icon; // current weather icon
             console.log(`Icon: ${currentCityWeatherIcon}`);
+
+            // daily weather
+            var fiveDayForecast = [];
+
+            // need to put in object array TO DO
+            for (var i = 1; i <=5; i++) {
+                fiveDayForecast[i] = data.daily[i].temp.day;
+                console.log(`Day ${i} temp: ${fiveDayForecast[i]}`)
+            }
         })
 }
 
