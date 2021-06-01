@@ -1,11 +1,11 @@
-var APIkey = "28192cc5dd81f85bcfd688d592d9a8ab"
+var APIkey = "28192cc5dd81f85bcfd688d592d9a8ab";
 
 var cityInputEl = $('#city-input');
+
 var searchBtn = $('#search-button');
+var clearBtn = $('#clear-button');
 
 var currentCity;
-
-// var currentCityTempEl = $('#currentCityTemp');
 
 // use Open Weather 'One Call API' to get weather based on city coordinates
 function getWeather(data) {
@@ -108,6 +108,16 @@ function getWeather(data) {
         })
 }
 
+// Display search history as buttons
+function displaySearchHistory() {
+    var storedCities = JSON.parse(localStorage.getItem("cities")) || [];
+    
+    for (i = 0; i < storedCities.length; i++) {
+        console.log(storedCities[i].city);
+    }
+}
+
+
 // use Open Weather 'Current weather data (API)' to get city coordinates to then send to 'One Call API' to get weather
 function getCoordinates () {
     var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${currentCity}&appid=${APIkey}`;
@@ -134,7 +144,14 @@ function getCoordinates () {
       })
 }
 
-// handle city name to first search for city coordinates
+// handle requst to clear past search history
+function handleClearHistory (event) {
+    event.preventDefault();
+    console.log(`Entered clear history function`);
+    localStorage.removeItem("cities");
+}
+
+// handle submit of city name by trimming and sending to getCoordinates function, clear HTML display of past weather data, cards, titles
 function handleCityFormSubmit (event) {
     event.preventDefault();
     currentCity = cityInputEl.val().trim();
@@ -151,7 +168,11 @@ function handleCityFormSubmit (event) {
     getCoordinates();
 }
 
+displaySearchHistory ();
+
 searchBtn.on("click", handleCityFormSubmit);
+
+clearBtn.on("click", handleClearHistory);
 
 // https://openweathermap.org/api/one-call-api
 // https://openweathermap.org/weather-conditions
