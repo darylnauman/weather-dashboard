@@ -26,6 +26,13 @@ function getWeather(data) {
             cityNameEl.text(currentCity);
             currentConditionsEl.append(cityNameEl);
             
+            // get date from results and display by appending to city name element
+            var currentCityDate = data.current.dt;
+            currentCityDate = moment.unix(currentCityDate).format("MM/DD/YYYY");
+            var currentDateEl = $('<span>');
+            currentDateEl.text(` (${currentCityDate}) `);
+            cityNameEl.append(currentDateEl);
+
             // get weather icon and display by appending to city name element            
             var currentCityWeatherIcon = data.current.weather[0].icon; // current weather icon
             var currentWeatherIconEl = $('<img>');
@@ -64,12 +71,26 @@ function getWeather(data) {
             fiveDayHeaderEl.text('5-Day Forecast');
             fiveDayForecastEl.append(fiveDayHeaderEl);
 
-            var fiveDayForecast = [];
-
-            // need to put in object array TO DO
             for (var i = 1; i <=5; i++) {
-                fiveDayForecast[i] = data.daily[i].temp.day;
-                console.log(`Day ${i} temp: ${fiveDayForecast[i]}`)
+                var date;
+                var temp;
+                var icon;
+                var wind;
+                var humidity;
+
+                date = data.daily[i].dt;
+                date = moment.unix(date).format("MM/DD/YYYY");
+
+                temp = data.daily[i].temp.day;
+                icon = data.daily[i].weather[0].icon;
+                wind = data.daily[i].wind_speed;
+                humidity = data.daily[i].humidity;
+
+                console.log(date);
+                console.log(temp);
+                console.log(icon);
+                console.log(wind);
+                console.log(humidity);
             }
         })
 }
