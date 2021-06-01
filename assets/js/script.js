@@ -20,6 +20,7 @@ function getWeather(data) {
 
             // current weather
             var currentConditionsEl = $('#currentConditions');
+            currentConditionsEl.addClass('border border-primary');
 
             // create city name element and display
             var cityNameEl = $('<h2>');
@@ -39,7 +40,6 @@ function getWeather(data) {
             currentWeatherIconEl.attr("src", "http://openweathermap.org/img/wn/" + currentCityWeatherIcon + ".png");
             cityNameEl.append(currentWeatherIconEl);
 
-            
             // get current temp data and display
             var currentCityTemp = data.current.temp;
             var currentTempEl = $('<p>')
@@ -66,10 +66,12 @@ function getWeather(data) {
 
             // 5 - Day Forecast
             // create 5 Day Forecast <h2> header
-            var fiveDayForecastEl = $('#fiveDayForecast');
+            var fiveDayForecastHeaderEl = $('#fiveDayForecastHeader');
             var fiveDayHeaderEl = $('<h2>');
-            fiveDayHeaderEl.text('5-Day Forecast');
-            fiveDayForecastEl.append(fiveDayHeaderEl);
+            fiveDayHeaderEl.text('5-Day Forecast:');
+            fiveDayForecastHeaderEl.append(fiveDayHeaderEl);
+
+            var fiveDayForecastEl = $('#fiveDayForecast');
 
             for (var i = 1; i <=5; i++) {
                 var date;
@@ -86,11 +88,22 @@ function getWeather(data) {
                 wind = data.daily[i].wind_speed;
                 humidity = data.daily[i].humidity;
 
-                console.log(date);
-                console.log(temp);
-                console.log(icon);
-                console.log(wind);
-                console.log(humidity);
+                // create a card
+                var card = document.createElement('div');
+                card.classList.add('card', 'col-2', 'm-1', 'p-1', 'bg-primary', 'text-white');
+
+                
+                var cardBody = document.createElement('div');
+                cardBody.classList.add('card-body');
+                cardBody.innerHTML = `<h6>${date}</h6>
+                                      <img src= "http://openweathermap.org/img/wn/${icon}.png"> </><br>
+                                       ${temp}°C<br>
+                                       ${wind} KPH <br>
+                                       ${humidity}%`
+                
+                card.appendChild(cardBody);
+
+                fiveDayForecastEl.append(card);
             }
         })
 }
@@ -128,6 +141,9 @@ function handleCityFormSubmit (event) {
 
     var currentConditionsEl = document.getElementById("currentConditions");
     currentConditionsEl.innerHTML = '';
+
+    var fiveDayForecastHeaderEl = document.getElementById("fiveDayForecastHeader");
+    fiveDayForecastHeaderEl.innerHTML = '';
 
     var fiveDayForecastEl = document.getElementById("fiveDayForecast");
     fiveDayForecastEl.innerHTML = '';
