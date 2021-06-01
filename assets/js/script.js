@@ -24,7 +24,14 @@ function getWeather(data) {
             // create city name element and display
             var cityNameEl = $('<h2>');
             cityNameEl.text(currentCity);
-            currentConditionsEl.append(cityNameEl);      
+            currentConditionsEl.append(cityNameEl);
+            
+            // get weather icon and display by appending to city name element            
+            var currentCityWeatherIcon = data.current.weather[0].icon; // current weather icon
+            var currentWeatherIconEl = $('<img>');
+            currentWeatherIconEl.attr("src", "http://openweathermap.org/img/wn/" + currentCityWeatherIcon + ".png");
+            cityNameEl.append(currentWeatherIconEl);
+
             
             // get current temp data and display
             var currentCityTemp = data.current.temp;
@@ -43,20 +50,14 @@ function getWeather(data) {
             var currentHumidityEl = $('<p>')
             currentHumidityEl.text(`Humidity: ${currentCityHumidity}%`)
             currentConditionsEl.append(currentHumidityEl);
-            
 
             // get current UV index and display
             var currentCityUV = data.current.uvi;
             var currentUvEl = $('<p>')
             currentUvEl.text(`UV: ${currentCityUV}`)
             currentConditionsEl.append(currentUvEl);
-            
-            // TO DO 
-            var currentCityWeatherIcon = data.current.weather[0].icon; // current weather icon
-            console.log(`Icon: ${currentCityWeatherIcon}`);
 
-            // daily weather
-
+            // 5 - Day Forecast
             // create 5 Day Forecast <h2> header
             var fiveDayForecastEl = $('#fiveDayForecast');
             var fiveDayHeaderEl = $('<h2>');
@@ -83,7 +84,6 @@ function getCoordinates () {
           return response.json();
       })
       .then(function(data) {
-        console.log(data);
         
         var cityInfo = {
             city: currentCity,
@@ -104,6 +104,13 @@ function getCoordinates () {
 function handleCityFormSubmit (event) {
     event.preventDefault();
     currentCity = cityInputEl.val().trim();
+
+    var currentConditionsEl = document.getElementById("currentConditions");
+    currentConditionsEl.innerHTML = '';
+
+    var fiveDayForecastEl = document.getElementById("fiveDayForecast");
+    fiveDayForecastEl.innerHTML = '';
+
     getCoordinates();
 }
 
