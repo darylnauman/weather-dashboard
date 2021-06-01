@@ -19,38 +19,50 @@ function getWeather(data) {
             console.log(data);
 
             // current weather
-            // console.log(`In getWeather - city: ${currentCity}`);
-
-            // document.getElementById('currentCity').innerHTML = currentCity;
-
             var currentConditionsEl = $('#currentConditions');
+
+            // create city name element and display
             var cityNameEl = $('<h2>');
-            cityNameEl.textContent = currentCity;
-            console.log(cityNameEl);
-            currentConditionsEl.append(cityNameEl);
-
-            // var cityNameEl = document.createElement('h2');
-            // cityNameEl.textContent = currentCity;
-            // console.log(`cityNameEl: ${cityNameEl}`);
-            // currentConditionsEl.appendChild(cityNameEl);
+            cityNameEl.text(currentCity);
+            currentConditionsEl.append(cityNameEl);      
             
-            var currentCityTemp = data.current.temp; // current temperature
-             console.log(`Temp: ${currentCityTemp}`);
-            //  currentCityTempEl.textContent = currentCityTemp;
+            // get current temp data and display
+            var currentCityTemp = data.current.temp;
+            var currentTempEl = $('<p>')
+            currentTempEl.text(`Temp: ${currentCityTemp}°C`)
+            currentConditionsEl.append(currentTempEl);
             
-            var currentCityWind = data.current.wind_speed; // current wind speed
-            console.log(`Wind: ${currentCityWind}`);
+            // get current wind speed and display
+            var currentCityWind = data.current.wind_speed;
+            var currentWindEl = $('<p>')
+            currentWindEl.text(`Wind: ${currentCityWind} KPH`)
+            currentConditionsEl.append(currentWindEl);
 
-            var currentCityHumidity = data.current.humidity; // current humidity
-            console.log(`Humidity: ${currentCityHumidity}`);
+            // get current humidity and display
+            var currentCityHumidity = data.current.humidity;
+            var currentHumidityEl = $('<p>')
+            currentHumidityEl.text(`Humidity: ${currentCityHumidity}%`)
+            currentConditionsEl.append(currentHumidityEl);
+            
 
-            var currentCityUV = data.current.uvi; // current UV index
-            console.log(`UV: ${currentCityUV}`);
-
+            // get current UV index and display
+            var currentCityUV = data.current.uvi;
+            var currentUvEl = $('<p>')
+            currentUvEl.text(`UV: ${currentCityUV}`)
+            currentConditionsEl.append(currentUvEl);
+            
+            // TO DO 
             var currentCityWeatherIcon = data.current.weather[0].icon; // current weather icon
             console.log(`Icon: ${currentCityWeatherIcon}`);
 
             // daily weather
+
+            // create 5 Day Forecast <h2> header
+            var fiveDayForecastEl = $('#fiveDayForecast');
+            var fiveDayHeaderEl = $('<h2>');
+            fiveDayHeaderEl.text('5-Day Forecast');
+            fiveDayForecastEl.append(fiveDayHeaderEl);
+
             var fiveDayForecast = [];
 
             // need to put in object array TO DO
@@ -91,10 +103,7 @@ function getCoordinates () {
 // handle city name to first search for city coordinates
 function handleCityFormSubmit (event) {
     event.preventDefault();
-
     currentCity = cityInputEl.val().trim();
-    console.log(`In handleCityFormSubmit - city: ${currentCity}`);
-
     getCoordinates();
 }
 
