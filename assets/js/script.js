@@ -187,6 +187,3 @@ displaySearchHistory();
 searchBtn.on("click", handleCityFormSubmit);
 
 clearBtn.on("click", handleClearHistory);
-
-// https://openweathermap.org/api/one-call-api
-// https://openweathermap.org/weather-conditions
