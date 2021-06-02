@@ -72,6 +72,7 @@ function getWeather(data) {
 
             var fiveDayForecastEl = $('#fiveDayForecast');
 
+            // get key weather info from API data for five day forecast and display
             for (var i = 1; i <=5; i++) {
                 var date;
                 var temp;
@@ -90,8 +91,8 @@ function getWeather(data) {
                 // create a card
                 var card = document.createElement('div');
                 card.classList.add('card', 'col-2', 'm-1', 'bg-primary', 'text-white');
-
                 
+                // create card body and append
                 var cardBody = document.createElement('div');
                 cardBody.classList.add('card-body');
                 cardBody.innerHTML = `<h6>${date}</h6>
@@ -101,10 +102,10 @@ function getWeather(data) {
                                        ${humidity}%`
                 
                 card.appendChild(cardBody);
-
                 fiveDayForecastEl.append(card);
             }
         })
+    return;
 }
 
 // Display search history as buttons
@@ -122,6 +123,7 @@ function displaySearchHistory() {
         pastCityBtn.textContent = `${storedCities[i].city}`;
         pastSearchesEl.appendChild(pastCityBtn);
     }
+    return;
 }
 
 // use Open Weather 'Current weather data (API)' to get city coordinates to then send to 'One Call API' to get weather
@@ -131,10 +133,14 @@ function getCoordinates () {
 
     fetch(requestUrl)
       .then(function (response) {
-          return response.json();
+        if (response.status >= 200 && response.status <= 299) {
+            return response.json();
+          } else {
+            throw Error(response.statusText);
+          }
       })
       .then(function(data) {
-        
+ 
         var cityInfo = {
             city: currentCity,
             lon: data.coord.lon,
@@ -151,6 +157,7 @@ function getCoordinates () {
       .then(function (data) {
         getWeather(data);
       })
+      return;
 }
 
 // handle requst to clear past search history
@@ -160,6 +167,8 @@ function handleClearHistory (event) {
 
     localStorage.removeItem("cities");
     pastSearchesEl.innerHTML ='';
+
+    return;
 }
 
 function clearCurrentCityWeather () {
@@ -182,6 +191,8 @@ function handleCityFormSubmit (event) {
 
     clearCurrentCityWeather();
     getCoordinates();
+
+    return;
 }
 
 // When user clicks on city previously searched, an updated forecast will be retrieved and displayed
@@ -197,7 +208,11 @@ function getPastCity (event) {
         
         fetch(requestUrl)
           .then(function (response) {
-               return response.json();
+            if (response.status >= 200 && response.status <= 299) {
+                return response.json();
+              } else {
+                throw Error(response.statusText);
+              }
            })
            .then(function(data) {
                 var cityInfo = {
@@ -210,8 +225,8 @@ function getPastCity (event) {
            .then(function (data) {
                 getWeather(data);
         })
-
     }
+    return;
 }
 
 displaySearchHistory();
