@@ -1,9 +1,9 @@
 var APIkey = "28192cc5dd81f85bcfd688d592d9a8ab";
 
 var cityInputEl = $('#city-input');
-
 var searchBtn = $('#search-button');
 var clearBtn = $('#clear-button');
+var pastSearchedCitiesEl = $('#past-searches');
 
 var currentCity;
 
@@ -117,13 +117,10 @@ function displaySearchHistory() {
     for (i = 0; i < storedCities.length; i++) {
         
         var pastCityBtn = document.createElement("button");
-        pastCityBtn.classList.add("btn", "btn-primary", "my-2");
+        pastCityBtn.classList.add("btn", "btn-primary", "my-2", "past-city");
         pastCityBtn.setAttribute("style", "width: 100%");
         pastCityBtn.textContent = `${storedCities[i].city}`;
         pastSearchesEl.appendChild(pastCityBtn);
-
-        console.log(storedCities[i].city);
-
     }
 }
 
@@ -165,11 +162,7 @@ function handleClearHistory (event) {
     pastSearchesEl.innerHTML ='';
 }
 
-// handle submit of city name by trimming and sending to getCoordinates function, clear HTML display of past weather data, cards, titles
-function handleCityFormSubmit (event) {
-    event.preventDefault();
-    currentCity = cityInputEl.val().trim();
-
+function clearCurrentCityWeather () {
     var currentConditionsEl = document.getElementById("currentConditions");
     currentConditionsEl.innerHTML = '';
 
@@ -179,7 +172,46 @@ function handleCityFormSubmit (event) {
     var fiveDayForecastEl = document.getElementById("fiveDayForecast");
     fiveDayForecastEl.innerHTML = '';
 
+    return;
+}
+
+// handle submit of city name by trimming and sending to getCoordinates function, clear HTML display of past weather data, cards, titles
+function handleCityFormSubmit (event) {
+    event.preventDefault();
+    currentCity = cityInputEl.val().trim();
+
+    clearCurrentCityWeather();
     getCoordinates();
+}
+
+// When user clicks on city previously searched, an updated forecast will be retrieved and displayed
+function getPastCity (event) {
+    var element = event.target;
+
+    if (element.matches(".past-city")) {
+        currentCity = element.textContent;
+        
+        clearCurrentCityWeather();
+
+        var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${currentCity}&appid=${APIkey}`;
+        
+        fetch(requestUrl)
+          .then(function (response) {
+               return response.json();
+           })
+           .then(function(data) {
+                var cityInfo = {
+                    city: currentCity,
+                    lon: data.coord.lon,
+                    lat: data.coord.lat
+                }
+                return cityInfo;
+            })
+           .then(function (data) {
+                getWeather(data);
+        })
+
+    }
 }
 
 displaySearchHistory();
@@ -187,3 +219,5 @@ displaySearchHistory();
 searchBtn.on("click", handleCityFormSubmit);
 
 clearBtn.on("click", handleClearHistory);
+
+pastSearchedCitiesEl.on("click", getPastCity);

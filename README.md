@@ -10,6 +10,7 @@ The focus of this homework assignment for the University of Toronto SCS Coding B
 - New elements were created using jQuery or vanilla Javascript 
 - Bootstrap was used extensively for styling and creation of new components (e.g. cards for each day of the five day forecast)
 - The Bootstrap grid was used to establish containers, rows and columns
+- Clean simple UI with graphical representation of weather
 
 ## Link
 Website can be found here: https://darylnauman.github.io/weather-dashboard/
