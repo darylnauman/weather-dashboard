@@ -16,7 +16,6 @@ function getWeather(data) {
             return response.json();
         })
         .then(function(data) {
-            console.log(data);
 
             // current weather
             var currentConditionsEl = $('#currentConditions');
@@ -90,7 +89,7 @@ function getWeather(data) {
 
                 // create a card
                 var card = document.createElement('div');
-                card.classList.add('card', 'col-2', 'm-1', 'p-1', 'bg-primary', 'text-white');
+                card.classList.add('card', 'col-2', 'm-1', 'bg-primary', 'text-white');
 
                 
                 var cardBody = document.createElement('div');
@@ -111,12 +110,22 @@ function getWeather(data) {
 // Display search history as buttons
 function displaySearchHistory() {
     var storedCities = JSON.parse(localStorage.getItem("cities")) || [];
-    
+    var pastSearchesEl = document.getElementById('past-searches');
+
+    pastSearchesEl.innerHTML ='';
+
     for (i = 0; i < storedCities.length; i++) {
+        
+        var pastCityBtn = document.createElement("button");
+        pastCityBtn.classList.add("btn", "btn-primary", "my-2");
+        pastCityBtn.setAttribute("style", "width: 100%");
+        pastCityBtn.textContent = `${storedCities[i].city}`;
+        pastSearchesEl.appendChild(pastCityBtn);
+
         console.log(storedCities[i].city);
+
     }
 }
-
 
 // use Open Weather 'Current weather data (API)' to get city coordinates to then send to 'One Call API' to get weather
 function getCoordinates () {
@@ -137,6 +146,9 @@ function getCoordinates () {
 
         storedCities.push(cityInfo);
         localStorage.setItem("cities", JSON.stringify(storedCities));
+
+        displaySearchHistory();
+
         return cityInfo;
       })
       .then(function (data) {
@@ -147,8 +159,10 @@ function getCoordinates () {
 // handle requst to clear past search history
 function handleClearHistory (event) {
     event.preventDefault();
-    console.log(`Entered clear history function`);
+    var pastSearchesEl = document.getElementById('past-searches');
+
     localStorage.removeItem("cities");
+    pastSearchesEl.innerHTML ='';
 }
 
 // handle submit of city name by trimming and sending to getCoordinates function, clear HTML display of past weather data, cards, titles
@@ -168,7 +182,7 @@ function handleCityFormSubmit (event) {
     getCoordinates();
 }
 
-displaySearchHistory ();
+displaySearchHistory();
 
 searchBtn.on("click", handleCityFormSubmit);
 

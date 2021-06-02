@@ -23,23 +23,26 @@
       
       <div class="column col-3">
         <form>
-          <label class="">Search for a City:</label>
-          <input class="form-control me-2" type="search" placeholder="Search" id="city-input">
-          <button class="btn btn-outline-success m-2" type="submit" id="search-button">Enter City</button>
+          <label class="text-primary">Search for a City:</label>
+          <input class="form-control my-2 text-primary" type="search" placeholder="Search" id="city-input">
+          <button class="btn btn-outline-primary my-2" style="width: 100%" type="submit" id="search-button">Enter City</button>
         </form>
 
-        <form>
-          <!-- <input class="form-control me-2" type="search" placeholder="Search" id="city-input"> -->
-          <button class="btn btn-outline-success m-2" type="submit" id="clear-button">Clear History</button>
-        </form>
+        <button class="btn btn-outline-primary my-2" style="width: 100%" type="submit" id="clear-button">Clear History</button>
         
-        <ol id="past-searches"></ol>
+        <div class="border-top border-primary" id="past-searches">
+          <!-- Past city searches will go here  -->
+        </div>
+
       </div>
 
       <div class="column col-9">
         <div class="row" id="currentConditions"></div>
+        <!-- Current city current weather conditions will go here  -->
+        
         <div class="row" id="fiveDayForecastHeader"></div>
         <div class="d-flex flex-row flex-wrap justify-content-between" id="fiveDayForecast"></div>
+        <!-- Current city 5 day forecast will go here  -->
       </div>
 
   </div>
