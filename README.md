@@ -13,6 +13,7 @@ The focus of this homework assignment for the University of Toronto SCS Coding B
 - The Bootstrap grid was used to establish containers, rows and columns
 - Clean simple UI with graphical representation of weather
 - Moment.js is used to convert unix timestamp to MM/DD/YYYY format
+- Background color of UV index will adjust based on World Health Organization color scale
 
 ## Link
 Website can be found here: https://darylnauman.github.io/weather-dashboard/

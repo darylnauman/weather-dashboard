@@ -57,10 +57,26 @@ function getWeather(data) {
             currentHumidityEl.text(`Humidity: ${currentCityHumidity}%`)
             currentConditionsEl.append(currentHumidityEl);
 
-            // get current UV index and display
+            // get current UV index, set background color based on level and display
             var currentCityUV = data.current.uvi;
-            var currentUvEl = $('<p>')
-            currentUvEl.text(`UV: ${currentCityUV}`)
+            var currentUvEl = $('<p>');
+            var currentUvSpanEl = $('<span>');
+            currentUvEl.append(currentUvSpanEl);
+
+            currentUvSpanEl.text(`UV: ${currentCityUV}`)
+            
+            if ( currentCityUV < 3 ) {
+                currentUvSpanEl.css({'background-color':'green', 'color':'white'});
+            } else if ( currentCityUV < 6 ) {
+                currentUvSpanEl.css({'background-color':'yellow', 'color':'black'});
+            } else if ( currentCityUV < 8 ) {
+                currentUvSpanEl.css({'background-color':'orange', 'color':'white'});
+            } else if ( currentCityUV < 11 ) {
+                currentUvSpanEl.css({'background-color':'red', 'color':'white'});
+            } else {
+                currentUvSpanEl.css({'background-color':'violet', 'color':'white'});
+            }
+
             currentConditionsEl.append(currentUvEl);
 
             // 5 - Day Forecast
