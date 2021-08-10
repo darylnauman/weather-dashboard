@@ -11,8 +11,7 @@
 [License](#license) <br/>
 
 ## Description
-A weather dashboard that allows the user to get a city's current weather conditions and the five day forecast. Third-party APIs are used to access weather data by making requests with specific parameters to a URL.
-The was a homework assignment for the University of Toronto SCS Coding Boot Camp and no starter code was provided. 
+A weather dashboard that allows the user to get a city's current weather conditions and the five day forecast. Third-party APIs are used to access weather data by making requests with specific parameters to a URL. The was a homework assignment for the University of Toronto SCS Coding Boot Camp and no starter code was provided. 
 
 ## Key Features
 - Two different OpenWeather APIs are used to retrieved the required weather data
